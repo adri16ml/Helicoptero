@@ -39,7 +39,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     Graphics2D bufferGraphics, lienzoGraphics = null;
 
 //    //TEMPORIZADOR DEL JUEGO: AQUI SE LLAMA A LA ANIMACIÓN
-   Timer temporizador = new Timer(10,new ActionListener(){
+      Timer temporizador = new Timer(10,new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e){
             bucleDelJuego();
@@ -52,15 +52,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         initComponents();
         inicializaBuffers();
         temporizador.start();
-//        for (int i=0; i<numColumnas; i++){
-//            columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
-//        }
+        for (int i=0; i<numColumnas; i++){
+            columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
+        }
     }
     private void inicializaBuffers(){
         lienzoGraphics = (Graphics2D) jPanel1.getGraphics();
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         bufferGraphics = buffer.createGraphics();
- 
         bufferGraphics.setColor(Color.BLACK);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
     }
@@ -71,10 +70,10 @@ public class VentanaJuego extends javax.swing.JFrame {
         //dibujo el pájaro en su nueva posición
         miHelicopter.mueve(bufferGraphics);
         //desplazo las columnas a la izquierda. Si alguna choca, incremento en 1 el marcador
-//        for (int i=0; i<numColumnas; i++){
-//            if (columnas[i].mueve(bufferGraphics, miHelicopter)){
-//                puntuacion++;
-//            }
+        for (int i=0; i<numColumnas; i++){
+            if (columnas[i].mueve(bufferGraphics, miHelicopter)){
+                puntuacion++;
+            }
 //        }
 //        //avanza el suelo 
 //        miSuelo1.mueve(bufferGraphics);
@@ -86,9 +85,9 @@ public class VentanaJuego extends javax.swing.JFrame {
         lienzoGraphics.drawImage(buffer, 0,0, null);
 //        
 //                //chequea si ha chocado con alguna columna
-//        for (int i=0; i<numColumnas; i++){
-//            if (miHelicopter.chequeaColision(columnas[i])){temporizador.stop();}
-//        }
+    //    for (int i=0; i<numColumnas; i++){
+   //         if (miHelicopter.chequeaColision(columnas[i])){temporizador.stop();}
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,7 +135,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
          if (evt.getKeyCode() == KeyEvent.VK_SPACE){
            miHelicopter.yVelocidad += 9;
-       }        // TODO add your handling code here:
+       }      
     }//GEN-LAST:event_formKeyPressed
 
     /**
