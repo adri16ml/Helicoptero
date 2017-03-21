@@ -54,7 +54,7 @@ public class Columna {
 //        
     }
     
-    public boolean mueve(Graphics2D g2, Helicopter p){
+    public boolean mueve(Graphics2D g2, Helicoptero p){
         mueveColumna();
 //        g2.setColor(Color.BLUE);
 //        g2.fill(base);
