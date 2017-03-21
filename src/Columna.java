@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author xp
+ * @author Adrian
  */
 public class Columna {
     
@@ -46,27 +46,14 @@ public class Columna {
         col_abajo = (new ImageIcon(new ImageIcon(
                 getClass().getResource("/imagenes/build.png"))
                 .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
-                .getImage();
-//        col_arriba = (new ImageIcon(new ImageIcon(
-//                getClass().getResource("/imagenes/pipe_top.png"))
-//                .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
-//                .getImage();       
-//        
+                .getImage();       
     }
     
     public boolean mueve(Graphics2D g2, Helicoptero p){
         mueveColumna();
-//        g2.setColor(Color.BLUE);
-//        g2.fill(base);
         g2.drawImage(col_abajo, (int)base.getX(), (int)base.getY(), null);
-       
         //si el pájaro está en la columna, subo 1 el marcador
         return (base.getX() == p.x);
-       //oculto la fisica del juego
-//        g2.fill(circuloInferior);
-//        g2.fill(circuloSuperior);
-//        g2.setColor(Color.PINK);
-
     }
     
     private void mueveColumna(){

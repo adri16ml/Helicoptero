@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author jorgecisneros
+ * @author Adrian
  */
 public class Helicoptero extends Ellipse2D.Double{
     int yVelocidad = -2;
@@ -29,7 +29,6 @@ public class Helicoptero extends Ellipse2D.Double{
         imagen2 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/plane.png"))
                 .getImage().getScaledInstance(33, 23, Image.SCALE_DEFAULT))).getImage();
     }
-    
     public void sube(){
         this.yVelocidad += 9;
     }
@@ -55,11 +54,8 @@ public class Helicoptero extends Ellipse2D.Double{
         if (yVelocidad < -3){yVelocidad = -1;}  //si la velocidad es menor que -3 la deja en -1
     }
     
-//    public boolean chequeaColision(Columna c){
-//       
-
-//        
-//        return ( this.intersects(c.base));
-//    }
+    public boolean chequeaColision(Columna c){
+        return ( this.intersects(c.base));
+    }
 
 }

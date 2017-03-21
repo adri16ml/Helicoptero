@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 /**
@@ -23,8 +26,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     Helicoptero miHelicoptero = new Helicoptero(30);
 
-    static int ANCHOPANTALLA = 400;
-    static int ALTOPANTALLA = 750;
+    static int ANCHOPANTALLA = 650;
+    static int ALTOPANTALLA = 400;
     static int SEPARACION_COLUMNAS = 170 ;
     int numColumnas = 3;
     int puntuacion = 0;
@@ -34,10 +37,6 @@ public class VentanaJuego extends javax.swing.JFrame {
     int posicionMatorralesY = 0;
     //array de columnas
     Columna[] columnas = new Columna[numColumnas];
-
-    //los dos suelos para hacer el truco de que parezca infinito
-//    Suelo miSuelo1 = new Suelo(0, ALTOPANTALLA * 0.60);
-//    Suelo miSuelo2 = new Suelo(miSuelo1.getWidth(), ALTOPANTALLA * 0.60);
     
     BufferedImage buffer = null;
     Graphics2D bufferGraphics, lienzoGraphics = null;
@@ -60,10 +59,10 @@ public class VentanaJuego extends javax.swing.JFrame {
             columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
         }
     }
-//    private Image cargaImagen(String nombreImagen, double altoImagen){
-//        return (new ImageIcon(new ImageIcon(getClass().getResource(nombreImagen))
-//                .getImage().getScaledInstance(ANCHOPANTALLA, (int) altoImagen, Image.SCALE_DEFAULT))).getImage();
-//    }
+    private Image cargaImagen(String nombreImagen, double altoImagen){
+        return (new ImageIcon(new ImageIcon(getClass().getResource(nombreImagen))
+                .getImage().getScaledInstance(ANCHOPANTALLA, (int) altoImagen, Image.SCALE_DEFAULT))).getImage();
+    }
     private void inicializaBuffers(){
        lienzoGraphics = (Graphics2D) jPanel1.getGraphics();
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
@@ -71,7 +70,6 @@ public class VentanaJuego extends javax.swing.JFrame {
         bufferGraphics.setColor(Color.BLACK);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
         //carga las imagenes de los adornos
-        
        // matorrales = cargaImagen("/imagenes/bush.png", ALTOPANTALLA*0.05);
       //  nubes = cargaImagen("/imagenes/clouds.png", ALTOPANTALLA*0.10);
       //  posicionMatorralesY = (int)(ALTOPANTALLA * 0.60)-matorrales.getHeight(null);
@@ -93,19 +91,15 @@ public class VentanaJuego extends javax.swing.JFrame {
                 puntuacion++;
             }
         }
-//        //avanza el suelo 
-//        miSuelo1.mueve(bufferGraphics);
-//        miSuelo2.mueve(bufferGraphics);
         //dibuja el marcador
         bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 80)); 
         bufferGraphics.drawString(" " + puntuacion, ANCHOPANTALLA/3, 70);
         //dibuja el resultado
         lienzoGraphics.drawImage(buffer, 0,0, null);
-        
-                //chequea si ha chocado con alguna columna
-//        for (int i=0; i<numColumnas; i++){
-//            if (miHelicoptero.chequeaColision(columnas[i])){temporizador.stop();}
-//        }
+         //chequea si ha chocado con alguna columna
+        for (int i=0; i<numColumnas; i++){
+            if (miHelicoptero.chequeaColision(columnas[i])){temporizador.stop();}
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,6 +119,12 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -133,7 +133,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 399, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,6 +155,15 @@ public class VentanaJuego extends javax.swing.JFrame {
            miHelicoptero.yVelocidad += 9;
        }      
     }//GEN-LAST:event_formKeyPressed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+       try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream( getClass().getResource("/sonidos/AllahuAkbar.wav") )); 
+            clip.loop(0);
+        } catch (Exception e) {      
+        } 
+    }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments
