@@ -25,7 +25,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     static int ANCHOPANTALLA = 700;
     static int ALTOPANTALLA = 400;
     static int SEPARACION_COLUMNAS = 170 ;
-    int numColumnas = 3;
+    int numColumnas = 4;
     int puntuacion = 0;
     
     //array de columnas
@@ -39,7 +39,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     Graphics2D bufferGraphics, lienzoGraphics = null;
 
 //    //TEMPORIZADOR DEL JUEGO: AQUI SE LLAMA A LA ANIMACIÓN
-      Timer temporizador = new Timer(10,new ActionListener(){
+      Timer temporizador = new Timer(5,new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e){
             bucleDelJuego();
@@ -51,10 +51,11 @@ public class VentanaJuego extends javax.swing.JFrame {
     public VentanaJuego() {
         initComponents();
         inicializaBuffers();
-        temporizador.start();
+        
         for (int i=0; i<numColumnas; i++){
             columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
         }
+        temporizador.start();
     }
     private void inicializaBuffers(){
         lienzoGraphics = (Graphics2D) jPanel1.getGraphics();
@@ -63,6 +64,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         bufferGraphics.setColor(Color.BLACK);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
     }
+    
     private void bucleDelJuego(){
         //limpio la pantalla
         bufferGraphics.setColor(Color.BLACK);

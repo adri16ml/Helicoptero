@@ -44,11 +44,7 @@ public class Columna {
 //                getClass().getResource("/imagenes/pipe_bottom.png"))
 //                .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
 //                .getImage();
-//        col_arriba = (new ImageIcon(new ImageIcon(
-//                getClass().getResource("/imagenes/pipe_top.png"))
-//                .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
-//                .getImage();       
-//        
+       
 //    }
     
     public boolean mueve(Graphics2D g2, Helicopter p){
@@ -58,7 +54,7 @@ public class Columna {
 //        g2.drawImage(col_abajo, (int)base.getX(), (int)base.getY()-ancho_columna/2, null);
 //        g2.drawImage(col_arriba, (int)capitel.getX(), (int)capitel.getY()+ancho_columna/2, null);
         //si el pájaro está en la columna, subo 1 el marcador
-        return (capitel.getX() == p.x);
+        return (base.getX() == p.x);
        //oculto la fisica del juego
 //        g2.fill(circuloInferior);
 //        g2.fill(circuloSuperior);
@@ -75,7 +71,6 @@ public class Columna {
         }
         else{
             base.setFrame(base.getX()-1, base.getY(),base.getWidth(), base.getHeight());
-            circuloInferior.setFrame(circuloInferior.getX()-1, circuloInferior.getY(),circuloInferior.getWidth(), circuloInferior.getHeight());    
         }
     }
 }
