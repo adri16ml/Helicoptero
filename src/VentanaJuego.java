@@ -67,7 +67,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     private void bucleDelJuego(){
         //limpio la pantalla
-        bufferGraphics.setColor(Color.BLACK);
+        bufferGraphics.setColor(Color.GREEN);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA); 
         //dibujo el pájaro en su nueva posición
         miHelicopter.mueve(bufferGraphics);
@@ -76,7 +76,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             if (columnas[i].mueve(bufferGraphics, miHelicopter)){
                 puntuacion++;
             }
-//        }
+        }
 //        //avanza el suelo 
 //        miSuelo1.mueve(bufferGraphics);
 //        miSuelo2.mueve(bufferGraphics);
@@ -89,7 +89,7 @@ public class VentanaJuego extends javax.swing.JFrame {
 //                //chequea si ha chocado con alguna columna
     //    for (int i=0; i<numColumnas; i++){
    //         if (miHelicopter.chequeaColision(columnas[i])){temporizador.stop();}
-        }
+   //     }
     }
     /**
      * This method is called from within the constructor to initialize the form.
