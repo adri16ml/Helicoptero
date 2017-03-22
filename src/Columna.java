@@ -26,7 +26,7 @@ public class Columna {
     int altura_columna = 500;
     int ancho_columna = 79;
     private int ancho_pantalla;
-    Image col_abajo, col_arriba;
+    Image col_abajo, col_arriba,imagen3;
         
     public Columna (int _ancho, int _anchoPantalla){       
         posicionInicialColumna(_ancho);
@@ -46,15 +46,23 @@ public class Columna {
         col_abajo = (new ImageIcon(new ImageIcon(
                 getClass().getResource("/imagenes/build.png"))
                 .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
-                .getImage();       
+                .getImage();  
+        imagen3 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/explosion.png"))
+                .getImage().getScaledInstance(33, 23, Image.SCALE_DEFAULT))).getImage();
     }
     
-    public boolean mueve(Graphics2D g2, Helicoptero p){
+    public boolean mueve(Graphics2D g2, Helicoptero p, boolean explosion){
         mueveColumna();
-        g2.drawImage(col_abajo, (int)base.getX(), (int)base.getY(), null);
+        if(explosion){
+        g2.drawImage(imagen3,(int) base.getX(),(int) base.getY(), null);
+        }
+        else{
+        g2.drawImage(col_abajo, (int)base.getX(), (int)base.getY(), null);}
         //si el pájaro está en la columna, subo 1 el marcador
         return (base.getX() == p.x);
+    
     }
+    
     
     private void mueveColumna(){
         

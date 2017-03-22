@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
  */
 public class Helicoptero extends Ellipse2D.Double{
     int yVelocidad = -2;
-    Image imagen1, imagen2;
+    Image imagen1, imagen2,imagen3;
     int rotacion = 0;
     
     public Helicoptero(int _radio){
@@ -28,6 +28,7 @@ public class Helicoptero extends Ellipse2D.Double{
                 .getImage().getScaledInstance(33, 23, Image.SCALE_DEFAULT))).getImage();
         imagen2 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/plane.png"))
                 .getImage().getScaledInstance(33, 23, Image.SCALE_DEFAULT))).getImage();
+        
     }
     public void sube(){
         this.yVelocidad += 9;
@@ -44,11 +45,13 @@ public class Helicoptero extends Ellipse2D.Double{
         this.y = this.y - yVelocidad;
         //pongo un tope para que no se salga por el techo
         if (this.y < 0) {this.y = 0;}
+        
         if (imagenPajaro < 15){
             g2.drawImage(imagen1, trans,null);}
         else{
             g2.drawImage(imagen2, trans, null);
         }
+        
         //g2.fill(this);
         yVelocidad --;
         if (yVelocidad < -3){yVelocidad = -1;}  //si la velocidad es menor que -3 la deja en -1

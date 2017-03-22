@@ -25,22 +25,30 @@ public class VentanaJuego extends javax.swing.JFrame {
         boolean gameOver = false;
     
     Helicoptero miHelicoptero = new Helicoptero(30);
-
+    // medidas para el ancho de la pantalla
     static int ANCHOPANTALLA = 650;
+    // altura de la pantalla
     static int ALTOPANTALLA = 400;
+    // separacion de las columnas 
     static int SEPARACION_COLUMNAS = 170 ;
+    // numero de las columnas que van a aparecer
     int numColumnas = 3;
+    // puntuacion en la que comienza el juego 
     int puntuacion = 0;
+    // el contador de la animacion empieza en 0 
     int contadorAnimacion = 0;
     //imagenes de los adornos
-    Image matorrales, nubes;
-    int posicionMatorralesY = 0;
+    Image fondo;
     //array de columnas
     Columna[] columnas = new Columna[numColumnas];
-    
+    //variable que se ejecutara despues para las explosiones de los edificios
+    boolean explosion = false;
+    //inicializamos los buffer a null
     BufferedImage buffer = null;
+    // como con el buffer inicializamos el lienzo y el B.Graphics a null 
     Graphics2D bufferGraphics, lienzoGraphics = null;
-
+    //bolean para inicializar el juego
+    boolean comienzojuego = false;
     //TEMPORIZADOR DEL JUEGO: AQUI SE LLAMA A LA ANIMACIÓN
     Timer temporizador = new Timer(10,new ActionListener(){
         @Override
@@ -54,52 +62,76 @@ public class VentanaJuego extends javax.swing.JFrame {
     public VentanaJuego() {
         initComponents();
         inicializaBuffers();
+        // indicamos el tamaño que va a tener el jDialog al presionar el boton escape 
+        fin.setSize(ANCHOPANTALLA/2,ALTOPANTALLA/2);
+        // y su posicion 
+        fin.setLocation(500, 20);
+        // comienza el juego al presionar el boton.
         temporizador.start();
         for (int i=0; i<numColumnas; i++){
             columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
         }
     }
-    private Image cargaImagen(String nombreImagen, double altoImagen){
-        return (new ImageIcon(new ImageIcon(getClass().getResource(nombreImagen))
-                .getImage().getScaledInstance(ANCHOPANTALLA, (int) altoImagen, Image.SCALE_DEFAULT))).getImage();
-    }
     private void inicializaBuffers(){
        lienzoGraphics = (Graphics2D) jPanel1.getGraphics();
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         bufferGraphics = buffer.createGraphics();
-        bufferGraphics.setColor(Color.BLACK);
+        bufferGraphics.setColor(Color.white);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
-        //carga las imagenes de los adornos
-       // matorrales = cargaImagen("/imagenes/bush.png", ALTOPANTALLA*0.05);
-      //  nubes = cargaImagen("/imagenes/clouds.png", ALTOPANTALLA*0.10);
-      //  posicionMatorralesY = (int)(ALTOPANTALLA * 0.60)-matorrales.getHeight(null);
+      
     }
     
       private void bucleDelJuego(){
+          bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA); 
+          if(!comienzojuego){
+              fin.setVisible(true);
+              temporizador.stop();
+          }
+          // añadimos la variable contadorAnimacion++ para que el contador vaya aumentando a medida que superamos
+          //columnas
         contadorAnimacion++;
         if (contadorAnimacion > 30) {contadorAnimacion = 0;}
-        //limpio la pantalla
-        bufferGraphics.setColor(new Color(113, 198, 205)); //el color original del flappy bird
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA); 
-        //bufferGraphics.drawImage(matorrales, 0,posicionMatorralesY, null);
-        //bufferGraphics.drawImage(nubes, 0,0, null);
-        //dibujo el pájaro en su nueva posición
+        //dibujamos el avion en su posicion y el contador de la animacion 
         miHelicoptero.mueve(bufferGraphics, contadorAnimacion);
         //desplazo las columnas a la izquierda. Si alguna coincide con la posicion del pajaro, incremento en 1 el marcador
         for (int i=0; i<numColumnas; i++){
-            if (columnas[i].mueve(bufferGraphics, miHelicoptero)){
+            // en este bucle conseguimos que el avion al chequear si a colisionado con una columna, entre en 
+            // la variable booleana y active la explosion, cambiando el edificio por una explosion
+            if (miHelicoptero.chequeaColision(columnas[i])){
+                // true= ha habido una colision con el avion y un edificio
+               explosion = true;
+               columnas[i].mueve(bufferGraphics, miHelicoptero, explosion);
+               // cuando hay una colision el juego se detiene
+               temporizador.stop();
+               i = numColumnas;
+            }     
+            else{
+                // si no hay colision indicamos que tampoco va a haber una explosion posterior
+            explosion =false;
+                    }
+        }
+        // cada vez que el avion pase por encima de una columna la puntuacion ira aumentando 
+        for (int i=0; i<numColumnas; i++){
+            if (columnas[i].mueve(bufferGraphics, miHelicoptero, explosion)){
+                // veces que aumenta la puntuacion +1
                 puntuacion++;
             }
         }
-        //dibuja el marcador
-        bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 80)); 
-        bufferGraphics.drawString(" " + puntuacion, ANCHOPANTALLA/3, 70);
-        //dibuja el resultado
-        lienzoGraphics.drawImage(buffer, 0,0, null);
-         //chequea si ha chocado con alguna columna
+        
         for (int i=0; i<numColumnas; i++){
             if (miHelicoptero.chequeaColision(columnas[i])){temporizador.stop();}
         }
+        //dibuja el marcador, con el tipo de fuente y el tamaño
+        bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 70));
+        // el color de la fuente del marcador 
+        bufferGraphics.setColor(Color.black);
+        // texto que va a tener el marcador y posicion en la que se muestra
+        bufferGraphics.drawString("virgenes" +" " + puntuacion, ANCHOPANTALLA/5, 80);
+        // repintamos el buffer de blanco para que no se sobreescriba sobre el marcador
+        bufferGraphics.setColor(Color.white);
+        //dibujamos la imagen del buffer
+        lienzoGraphics.drawImage(buffer, 0,0, null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,7 +142,49 @@ public class VentanaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fin = new javax.swing.JDialog();
+        continuar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+
+        fin.setPreferredSize(new java.awt.Dimension(325, 200));
+        fin.setResizable(false);
+        fin.setSize(new java.awt.Dimension(325, 200));
+
+        continuar.setText("CONTINUAR");
+        continuar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                continuarMouseClicked(evt);
+            }
+        });
+
+        jButton1.setText("Nueva partida");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout finLayout = new javax.swing.GroupLayout(fin.getContentPane());
+        fin.getContentPane().setLayout(finLayout);
+        finLayout.setHorizontalGroup(
+            finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(finLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(continuar)
+                    .addComponent(jButton1))
+                .addContainerGap(174, Short.MAX_VALUE))
+        );
+        finLayout.setVerticalGroup(
+            finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(finLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(continuar)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -151,19 +225,42 @@ public class VentanaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_SPACE){
+        // evento que actua al presionar el espacio aumentando la velocidad del avion 
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE){
            miHelicoptero.yVelocidad += 9;
-       }      
+
+       }   
+        // si presionamos el ESCAPE entraremos en este bucle que nos muestra un jDialog con un menu de pausa
+          if (evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+              // menu que se muestra al presionar ESCAPE
+           fin.setVisible(true);
+           // el juego se detiene al presionar el boton 
+           temporizador.stop();
+       } 
     }//GEN-LAST:event_formKeyPressed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-       try {
+      // evento para incluir un clip de sonido al presionar click sobre el jpanel 
+        try {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream( getClass().getResource("/sonidos/AllahuAkbar.wav") )); 
             clip.loop(0);
         } catch (Exception e) {      
         } 
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void continuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continuarMouseClicked
+      // evento para el boton continuar que hara que el jdialog desaparezca y el juevo comience de nuevo
+        fin.setVisible(false);
+       temporizador.start();
+    }//GEN-LAST:event_continuarMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+           fin.setVisible(false);
+           //el juego esta parado hasta presionar el espacio
+           comienzojuego = true;
+           temporizador.start();
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -201,6 +298,9 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton continuar;
+    private javax.swing.JDialog fin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
