@@ -133,11 +133,11 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         }
         //dibuja el marcador, con el tipo de fuente y el tamaño
-        bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 70));
+        bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 30));
         // el color de la fuente del marcador 
         bufferGraphics.setColor(Color.black);
         // texto que va a tener el marcador y posicion en la que se muestra
-        bufferGraphics.drawString("virgenes" +" " + puntuacion, ANCHOPANTALLA/5, 80);
+        bufferGraphics.drawString("Ilegales"+" " + puntuacion, ANCHOPANTALLA/5, 50);
         // repintamos el buffer de blanco para que no se sobreescriba sobre el marcador
         bufferGraphics.setColor(Color.white);
         //dibujamos la imagen del buffer
@@ -199,8 +199,8 @@ public class VentanaJuego extends javax.swing.JFrame {
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Malayalam Sangam MN", 0, 24)); // NOI18N
-        jLabel1.setText("ENHORABUENA TE ESPERAN ESTAS VIRGENES ");
+        jLabel1.setFont(new java.awt.Font("Bernard MT Condensed", 0, 36)); // NOI18N
+        jLabel1.setText("Donald Trump te da las gracias");
 
         jLabel2.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 48)); // NOI18N
 

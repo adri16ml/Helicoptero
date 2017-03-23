@@ -49,11 +49,11 @@ public class Columna {
     private void precargaImagenes(){
 //    cargamos las imagenes que va a tener la columna, en este caso tendra 2 la inicial y cuando el avion impacte
         col_abajo = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/build.png"))
+                getClass().getResource("/imagenes/arabe.png"))
                 .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
                 .getImage();  
         //imagen del avion al impactar en la columna
-        imagen3 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/explosion.png"))
+        imagen3 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/fidel.png"))
                 .getImage().getScaledInstance(33, 23, Image.SCALE_DEFAULT))).getImage();
     }
     // iniciamos un metodo para mover las columnas con un boolean que nos indica si el avion impacta(true) o no toca

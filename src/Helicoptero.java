@@ -24,10 +24,10 @@ public class Helicoptero extends Ellipse2D.Double{
     //creamos el avion(helicoptero) del juego con sus dos imagenes escaladas a su tamaño
     public Helicoptero(int _radio){
         super(100, 100, 50, 50);
-        imagen1 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/plane.png"))
-                .getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))).getImage();
-        imagen2 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/plane.png"))
-                .getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))).getImage();
+        imagen1 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/donald.png"))
+                .getImage().getScaledInstance(100, 50, Image.SCALE_DEFAULT))).getImage();
+        imagen2 = (new ImageIcon(new ImageIcon(getClass().getResource("/imagenes/donald.png"))
+                .getImage().getScaledInstance(100, 50, Image.SCALE_DEFAULT))).getImage();
         
     }
     //iniciamos el movimiento del avion al subir, se aumentara en +9
