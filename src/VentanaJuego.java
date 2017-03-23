@@ -21,7 +21,9 @@ import javax.swing.Timer;
  * @author Adrian
  */
 public class VentanaJuego extends javax.swing.JFrame {
-    
+    // declaramos la variable del fondo de pantalla con sus diametros
+    fondo miFondo = new fondo(ALTOPANTALLA, ANCHOPANTALLA);
+    // declaramos el helicoptero 
     Helicoptero miHelicoptero = new Helicoptero(30);
     // medidas para el ancho de la pantalla
     static int ANCHOPANTALLA = 650;
@@ -94,7 +96,9 @@ public class VentanaJuego extends javax.swing.JFrame {
           //columnas
         contadorAnimacion++;
         if (contadorAnimacion > 30) {contadorAnimacion = 0;}
-        bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA); 
+        bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
+        //añadimos la variable para poner el fondo en el jpanel 
+        miFondo.ponImagenDeFondo(bufferGraphics);
         //dibujamos el avion en su posicion y el contador de la animacion 
         miHelicoptero.mueve(bufferGraphics, contadorAnimacion);
         //desplazo las columnas a la izquierda. Si alguna coincide con la posicion del pajaro, incremento en 1 el marcador
