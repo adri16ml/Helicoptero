@@ -155,14 +155,17 @@ public class VentanaJuego extends javax.swing.JFrame {
         fin = new javax.swing.JDialog();
         continuar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         lose = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         reiniciar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
         fin.setResizable(false);
         fin.setSize(new java.awt.Dimension(325, 200));
+        fin.getContentPane().setLayout(null);
 
         continuar.setText("CONTINUAR");
         continuar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,6 +173,8 @@ public class VentanaJuego extends javax.swing.JFrame {
                 continuarMouseClicked(evt);
             }
         });
+        fin.getContentPane().add(continuar);
+        continuar.setBounds(20, 74, 130, 23);
 
         jButton1.setText("Nueva partida");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -177,32 +182,23 @@ public class VentanaJuego extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        fin.getContentPane().add(jButton1);
+        jButton1.setBounds(20, 33, 130, 23);
 
-        javax.swing.GroupLayout finLayout = new javax.swing.GroupLayout(fin.getContentPane());
-        fin.getContentPane().setLayout(finLayout);
-        finLayout.setHorizontalGroup(
-            finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(finLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(continuar)
-                    .addComponent(jButton1))
-                .addContainerGap(174, Short.MAX_VALUE))
-        );
-        finLayout.setVerticalGroup(
-            finLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(finLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(continuar)
-                .addContainerGap(91, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bandera.jpg"))); // NOI18N
+        fin.getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 300, 190);
+
+        lose.getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Bernard MT Condensed", 0, 36)); // NOI18N
         jLabel1.setText("Donald Trump te da las gracias");
+        lose.getContentPane().add(jLabel1);
+        jLabel1.setBounds(80, 10, 510, 180);
 
         jLabel2.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 48)); // NOI18N
+        lose.getContentPane().add(jLabel2);
+        jLabel2.setBounds(180, 130, 220, 140);
 
         reiniciar.setText("REINICIAR");
         reiniciar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,35 +206,12 @@ public class VentanaJuego extends javax.swing.JFrame {
                 reiniciarMouseClicked(evt);
             }
         });
+        lose.getContentPane().add(reiniciar);
+        reiniciar.setBounds(220, 300, 150, 60);
 
-        javax.swing.GroupLayout loseLayout = new javax.swing.GroupLayout(lose.getContentPane());
-        lose.getContentPane().setLayout(loseLayout);
-        loseLayout.setHorizontalGroup(
-            loseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loseLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(loseLayout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loseLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(reiniciar)
-                .addGap(54, 54, 54))
-        );
-        loseLayout.setVerticalGroup(
-            loseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loseLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(reiniciar)
-                .addGap(27, 27, 27))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/juego .png"))); // NOI18N
+        lose.getContentPane().add(jLabel3);
+        jLabel3.setBounds(0, 0, 650, 400);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -378,6 +351,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JDialog lose;
     private javax.swing.JButton reiniciar;
