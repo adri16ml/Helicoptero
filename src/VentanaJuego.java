@@ -280,7 +280,7 @@ public class VentanaJuego extends javax.swing.JFrame {
       // evento para incluir un clip de sonido al presionar click sobre el jpanel 
         try {
             Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream( getClass().getResource("/sonidos/AllahuAkbar.wav") )); 
+            clip.open(AudioSystem.getAudioInputStream( getClass().getResource("/sonidos/donald.wav") )); 
             clip.loop(0);
         } catch (Exception e) {      
         } 
