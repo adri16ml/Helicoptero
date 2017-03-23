@@ -180,7 +180,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
         fin.getContentPane().add(continuar);
-        continuar.setBounds(30, 300, 240, 50);
+        continuar.setBounds(200, 240, 240, 50);
 
         jButton1.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
         jButton1.setText("Nueva partida");
@@ -190,14 +190,14 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
         fin.getContentPane().add(jButton1);
-        jButton1.setBounds(40, 240, 200, 50);
+        jButton1.setBounds(220, 160, 200, 50);
 
-        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 3, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 3, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 51));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Donald trump debe identificar a los inmugrantes antes de la construccion de su muro");
         fin.getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 40, 610, 100);
+        jLabel5.setBounds(20, 300, 620, 100);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bandera.jpg"))); // NOI18N
         fin.getContentPane().add(jLabel4);

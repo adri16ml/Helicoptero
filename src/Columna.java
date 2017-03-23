@@ -42,14 +42,14 @@ public class Columna {
         //indicamos el int de aleatoriedad que van a teener
         int desplazamiento = aleatorio.nextInt(200)+200;
         // indicamos las medidas de la columna y su posicion 
-        base = new Rectangle2D.Double(_ancho,desplazamiento - ancho_columna, ancho_columna, altura_columna);
+        base = new Rectangle2D.Double(_ancho,desplazamiento -100, ancho_columna, altura_columna);
 
     }
     
     private void precargaImagenes(){
 //    cargamos las imagenes que va a tener la columna, en este caso tendra 2 la inicial y cuando el avion impacte
         col_abajo = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/arabe.png"))
+                getClass().getResource("/imagenes/mexican.png"))
                 .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
                 .getImage();  
         //imagen del avion al impactar en la columna
