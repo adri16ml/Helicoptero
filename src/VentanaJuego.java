@@ -22,8 +22,6 @@ import javax.swing.Timer;
  */
 public class VentanaJuego extends javax.swing.JFrame {
     
-        boolean gameOver = false;
-    
     Helicoptero miHelicoptero = new Helicoptero(30);
     // medidas para el ancho de la pantalla
     static int ANCHOPANTALLA = 650;
@@ -62,10 +60,14 @@ public class VentanaJuego extends javax.swing.JFrame {
     public VentanaJuego() {
         initComponents();
         inicializaBuffers();
+        // inicializamos el jdialog y su posicion 
+        lose.setLocation(10, 20);
+        // tamaño del jdialog con el mensaje al perder
+        lose.setSize(ANCHOPANTALLA, ALTOPANTALLA);
         // indicamos el tamaño que va a tener el jDialog al presionar el boton escape 
         fin.setSize(ANCHOPANTALLA/2,ALTOPANTALLA/2);
         // y su posicion 
-        fin.setLocation(500, 20);
+        fin.setLocation(100, 20);
         // comienza el juego al presionar el boton.
         temporizador.start();
         for (int i=0; i<numColumnas; i++){
@@ -82,6 +84,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
     
       private void bucleDelJuego(){
+          
           bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA); 
           if(!comienzojuego){
               fin.setVisible(true);
@@ -120,7 +123,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         
         for (int i=0; i<numColumnas; i++){
-            if (miHelicoptero.chequeaColision(columnas[i])){temporizador.stop();}
+            if (miHelicoptero.chequeaColision(columnas[i])){
+                temporizador.stop();
+                // jlabel en el que aparece la puntuacion al perder el juego 
+                jLabel2.setText(Integer.toString(puntuacion));
+                //mostramos el jlabel con el texto y la puntuacion final 
+                lose.setVisible(true);
+                
+            }
         }
         //dibuja el marcador, con el tipo de fuente y el tamaño
         bufferGraphics.setFont(new Font("Courier New", Font.BOLD, 70));
@@ -145,9 +155,12 @@ public class VentanaJuego extends javax.swing.JFrame {
         fin = new javax.swing.JDialog();
         continuar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        lose = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        reiniciar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
-        fin.setPreferredSize(new java.awt.Dimension(325, 200));
         fin.setResizable(false);
         fin.setSize(new java.awt.Dimension(325, 200));
 
@@ -184,6 +197,47 @@ public class VentanaJuego extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(continuar)
                 .addContainerGap(91, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Malayalam Sangam MN", 0, 24)); // NOI18N
+        jLabel1.setText("ENHORABUENA TE ESPERAN ESTAS VIRGENES ");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 48)); // NOI18N
+
+        reiniciar.setText("REINICIAR");
+        reiniciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reiniciarMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout loseLayout = new javax.swing.GroupLayout(lose.getContentPane());
+        lose.getContentPane().setLayout(loseLayout);
+        loseLayout.setHorizontalGroup(
+            loseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(loseLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loseLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(reiniciar)
+                .addGap(54, 54, 54))
+        );
+        loseLayout.setVerticalGroup(
+            loseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loseLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(reiniciar)
+                .addGap(27, 27, 27))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -262,6 +316,27 @@ public class VentanaJuego extends javax.swing.JFrame {
            temporizador.start();
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void reiniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reiniciarMouseClicked
+        // metodo para reiniciar el juego 
+        // reiniciamos las variables en primer lugar 
+         puntuacion = 0;
+        contadorAnimacion = 0;
+        puntuacion = 0;    
+        Helicoptero miHelicoptero = new Helicoptero(30);
+        // volvemos a pintar la posicion del helicoptero y limpiar los buffer
+        miHelicoptero.mueve(bufferGraphics, contadorAnimacion);
+        for (int i=0; i<numColumnas; i++){
+            // volvemos a colocar las columnas 
+            columnas[i] = new Columna(ANCHOPANTALLA + i*SEPARACION_COLUMNAS, ANCHOPANTALLA);
+        }
+        // iniciamos el lienzo en blanco de nuevo 
+        lienzoGraphics.drawImage(buffer, 0, 0, null);
+        // cerramos la ventana del jdialog 
+        lose.setVisible(false);
+        // y volvemos a iniciar el juego 
+        temporizador.start();
+    }//GEN-LAST:event_reiniciarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -301,6 +376,10 @@ public class VentanaJuego extends javax.swing.JFrame {
     private javax.swing.JButton continuar;
     private javax.swing.JDialog fin;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JDialog lose;
+    private javax.swing.JButton reiniciar;
     // End of variables declaration//GEN-END:variables
 }
